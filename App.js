@@ -1,4 +1,8 @@
+
+
 import React, { useState } from "react";
+import * as math from 'mathjs';
+
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,//nos permite darle estilos a la aplicacion
@@ -16,13 +20,18 @@ export default function App() {
   // Función para manejar el botón presionado (números y operadores)
   const handleButtonPress = (value) => {
     if (value === "C") {
-      setExpression();
+      setExpression("");
     } else if (value === "π") {
       setExpression(expression + "π");
+    } else if (value === "%") {
+      // Calcula el porcentaje dividiendo por 100
+      setExpression(expression + "%*");
     } else {
-      setExpression(expression + value); // Agrega el valor a la expresión actual donde se guarda la expresion de suma o resta
+      setExpression(expression + value);
     }
   };
+  
+  
   const handledelete = () => {
     if (expression.length > 0) {
       // Obtiene la expresión actual
@@ -34,88 +43,67 @@ export default function App() {
     }
   };
   //funcion para calcular el porcentaje
+// Función para calcular el resultado
+const handleCalculate = () => {
+  try {
+    let calculatedExpression = expression;
 
-  // Función para manejar el botón "Calcular"
-  const handleCalculate = () => {
-    try {
-      // Verifica si la expresión contiene "tan("
-      if (expression.includes("tan(")) {
-        const angulo = parseFloat(
-          expression.substring(4, expression.length - 1)
-        );
-        const tangente = Math.tan(angulo * (Math.PI / 180)); // Convierte el ángulo a radianes
+  // Reemplaza "%" seguido de un número por el resultado del porcentaje
+  calculatedExpression = calculatedExpression.replace(/%/g, "*0.01");
+    // Reemplaza "π" por el valor numérico correspondiente (Math.PI)
+    calculatedExpression = calculatedExpression.replace(/π/g, Math.PI);
 
-        // Formatea la tangente con 12 decimales si no es un número entero
-        if (Number.isInteger(tangente)) {
-          setExpression(tangente.toString());
-        } else {
-          setExpression(tangente.toFixed(12));
-        }
-      } else if (expression.includes("cos(")) {
-        const angulo = parseFloat(
-          expression.substring(4, expression.length - 1)
-        );
-        const coseno = Math.cos(angulo * (Math.PI / 180));
-        setExpression(coseno.toString());
-      } else if (expression.includes("sin(")) {
-        const angulo = parseFloat(
-          expression.substring(4, expression.length - 1)
-        );
-        const seno = Math.sin(angulo * (Math.PI / 180));
-        setExpression(seno.toString());
-      }else if(expression.includes('log(')){
-        const log= parseFloat(
-          expression.substring(4, expression.length - 1)
-        );
-        const result= Math.log(log);
-        setExpression(result.toString());
+    // Reemplaza "tan(" seguido de un número en grados por el resultado de la tangente
+    calculatedExpression = calculatedExpression.replace(/tan\(([^)]+)\)/g, function(match, degree) {
+      const radians = parseFloat(degree) * (Math.PI / 180);
+      return Math.tan(radians);
+    });
 
-      } else if (expression.includes("π")) {
-        // Reemplaza "pi" por el valor numérico correspondiente (Math.PI)
-        const expressionWithPi = expression.replace(/π/g, Math.PI);
-        // Evalúa la expresión modificada
-        const result = eval(expressionWithPi);
+    // Reemplaza "cos(" seguido de un número en grados por el resultado del coseno
+    calculatedExpression = calculatedExpression.replace(/cos\(([^)]+)\)/g, function(match, degree) {
+      const radians = parseFloat(degree) * (Math.PI / 180);
+      return Math.cos(radians);
+    });
 
-        setExpression(result.toString());
-      } else if (expression.includes("sqrt(")) {
-        const numero = parseFloat(
-          expression.substring(5, expression.length - 1)
-        );
-        if (!isNaN(numero)) {
-          const raizcuadrada = Math.sqrt(numero);
-          setExpression(raizcuadrada.toString());
-        }
-      } else if (expression.includes("^")) {
-        const parts = expression.split("^");
-        if (parts.length === 2) {
-          const base = parseFloat(parts[0]);
-          const exponente = parseFloat(parts[1]);
-          const resultado = Math.pow(base, exponente);
-          setExpression(resultado.toString());
-        }
-      } else if (expression.includes("%")) {
-        const parts = expression.split("%");
-        if (parts.length === 2) {
-          const porcentaje = parseFloat(parts[0]);
-          const numero = parseFloat(parts[1]);
-          const resultado = (numero * porcentaje) / 100;
-          setExpression(resultado.toString());
-        }
-      } else {
-        // Si no contiene "tan(", evalúa la expresión completa
-        let result = eval(expression);
+    // Reemplaza "sin(" seguido de un número en grados por el resultado del seno
+    calculatedExpression = calculatedExpression.replace(/sin\(([^)]+)\)/g, function(match, degree) {
+      const radians = parseFloat(degree) * (Math.PI / 180);
+      return Math.sin(radians);
+    });
 
-        // Formatea el resultado con 12 decimales si no es un número entero
-        if (Number.isInteger(result)) {
-          setExpression(result.toString());
-        } else {
-          setExpression(result.toFixed(12));
-        }
+    // Reemplaza "sqrt(" seguido de un número por la raíz cuadrada
+    calculatedExpression = calculatedExpression.replace(/sqrt\(([^)]+)\)/g, function(match, value) {
+      const number = parseFloat(value);
+      if (number < 0) {
+        return "Error"; // Maneja raíces cuadradas de números negativos
       }
-    } catch (error) {
-      setExpression("error");
+      return Math.sqrt(number);
+    });
+    // funcio para calcular log
+    calculatedExpression = calculatedExpression.replace(/log\(([^)]+)\)/g, function(match, value) {
+      const number = parseFloat(value);
+      if (number <= 0) {
+        return "Error"; // Maneja logaritmos de números no positivos
+      }
+      return Math.log10(number);
+    });
+    // Evalúa la expresión utilizando math.evaluate
+    const result = math.evaluate(calculatedExpression);
+
+    // Formatea el resultado con 12 decimales si no es un número entero
+    if (Number.isInteger(result)) {
+      setExpression(result.toString());
+    } else {
+      setExpression(result.toFixed(12));
     }
-  };
+  } catch (error) {
+    setExpression("Error");
+  }
+};
+
+  
+
+
 
   return (
     <View style={styles.container}>
