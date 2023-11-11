@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import * as math from 'mathjs';
-
+import { Picker } from '@react-native-picker/picker';
 import { StatusBar } from "expo-status-bar";
 import {
   StyleSheet,//nos permite darle estilos a la aplicacion
@@ -10,8 +10,9 @@ import {
   View,//nos permite que lo que esta dentro de esta etiqueta sea visible para el usuario
   TextInput,//nos permite ingresar input tipo texto
   TouchableOpacity,//este sirve para crear botones touch
-  Image,
-  Modal,
+  Image,//ESETE SIRVE PARA INGRESAR IMAGENES
+  Modal,//ESTE SIRVE PARA ABRIR UNA PESTAÑA NUEVA 
+  
 } from "react-native";
 
 export default function App() {
@@ -177,6 +178,57 @@ const conversionFarent = () =>{
   setConversionCel(conversionCel.toFixed(4));
 }
 //TERMINO DE LA FUNCION
+//funcion para convertir un numero decimal a binario
+const [decimalInput, setDecimalInput] = useState("");
+const [binaryResult, setBinaryResult] = useState("");
+
+const convertToBinary = () => {
+  const decimalNumber = parseInt(decimalInput, 10);
+  if (!isNaN(decimalNumber)) {
+    const binary = decimalNumber.toString(2);
+    setBinaryResult(binary);
+  } else {
+    setBinaryResult("Entrada no válida");
+  }
+};
+//termino
+//funcion pora la conversion de metros
+const [selectedValue, setSelectedValue] = useState('centimetros');
+const [result, setResult] = useState('');
+const [metros,setMetros] = useState('')
+const handleValueChange = (itemValue) => {
+  setSelectedValue(itemValue);
+};
+const ConversionMetros = () => {
+  const metro = parseFloat(metros);
+  switch (selectedValue) {
+    case 'centimetros':
+      
+      const result= metro*100;
+      setResult('METROS A CENTIMETROS ='+result.toFixed(2));
+      break;
+    case 'pie':
+    const resultado=metro*3.281;
+      setResult('METROS A PIES='+resultado.toFixed(2));
+      break;
+    case 'kilometro':
+      const kilometro=metro/1000;
+      setResult('METROS A KILOMETRO='+kilometro.toFixed(6));
+      break;
+    case 'milimetro':
+     const milimetro=metro*1000;
+     setResult('METROS A MILIMETROS='+milimetro.toFixed(2)) 
+     break;
+     case 'pulgada':
+     const pulgada=metro*39.37;
+     setResult('METROS A PULGADAS='+pulgada.toFixed(2)) 
+     break;
+    default:
+      setResult('Selecciona una opción');
+  }
+};
+
+//termino de funcion
   //funcion para sacar el factorial de un numero
   const factorial = (n)=>{
     if(n===0 || n===1){
@@ -922,6 +974,21 @@ onRequestClose={() => setIsPerimetroModalVisible(false)}
 >
   <Text style={styles.menuItem}>farenheit a celsius y viceversa</Text>
 </TouchableOpacity>
+<TouchableOpacity
+  onPress={() => {
+    openMenuConverisones("BINARIO"); // Abre el modal del BINARIO
+    setConversionesModalVisible(true);
+  }}
+>
+  <Text style={styles.menuItem}>DECIMAL A BINARIO</Text>
+</TouchableOpacity>
+<TouchableOpacity 
+onPress={()=>{
+  openMenuConverisones("METROS");
+  setConversionesModalVisible(true);
+}}>
+<Text style={styles.menuItem}>CONVERSION DE METROS</Text>
+</TouchableOpacity>
 
 <TouchableOpacity onPress={() => setIsMenuVisibleC(false)}>
     <Text style={styles.closeButton}>Cerrar</Text>
@@ -939,7 +1006,7 @@ onRequestClose={() => setConversionesModalVisible(false)}
 <View style={[styles.areaModalContainer, { zIndex: 2, position: 'absolute' }]}>
   
   {/* datos a pedir */}
-  <Text style={styles.areaModalTitle}>CONVERSIONES FARENHEIT A CELCIUS ↹</Text>
+  <Text style={styles.areaModalTitle}>CONVERSION FARENHEIT A CELCIUS ↹</Text>
   <TextInput
     placeholder="INGRESE F O C "
     value={faren}
@@ -972,6 +1039,98 @@ onRequestClose={() => setConversionesModalVisible(false)}
 </View>
 </Modal>
 }
+  {//modal BINARIO
+    <Modal
+animationType="slide"
+transparent={true}
+visible={ConverisionesModalVisible && selectedMenuItemC === "BINARIO"}
+onRequestClose={() => setConversionesModalVisible(false)}
+>
+<View style={[styles.areaModalContainer, { zIndex: 2, position: 'absolute' }]}>
+  
+  {/* datos a pedir */}
+  <Text style={styles.areaModalTitle}>CONVERSION DECIMAL A BINARIO ↹</Text>
+  <TextInput
+    placeholder="INGRESE NUMERO "
+    value={decimalInput}
+    onChangeText={text => setDecimalInput(text)}
+    keyboardType="numeric"
+    color="white"
+    backgroundColor="blue"
+    width="40%"
+    placeholderTextColor={"white"}
+    marginBottom="10%"
+
+  />
+  
+  <TouchableOpacity
+     style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}
+ onPress={convertToBinary}>
+<Text style={{ color: 'white', fontSize: 16 }}>Calcular</Text>
+</TouchableOpacity>
+  <Text style={{ fontSize: 16, marginTop: 20, color:"white" }}>
+    DECIMAL A BINARIO: {binaryResult}
+  </Text>
+  
+ 
+  {/* Por ejemplo, campos de entrada, botón de calcular, resultados, etc. */}
+  <TouchableOpacity onPress={() => setConversionesModalVisible(false)}>
+    <Text style={styles.closeButton}>Cerrar</Text>
+  </TouchableOpacity>
+</View>
+</Modal>
+}
+  {//modal BINARIO
+    <Modal
+    animationType="slide"
+    transparent={true}
+    visible={ConverisionesModalVisible && selectedMenuItemC === "METROS"}
+    onRequestClose={() => setConversionesModalVisible(false)}
+    >
+    <View style={[styles.areaModalContainer, { zIndex: 2, position: 'absolute' }]}>
+      
+      {/* datos a pedir */}
+      <Text style={styles.areaModalTitle}>CONVERSION DE METROS</Text>
+      <TextInput
+        placeholder="INGRESE LOS METROS "
+        value={metros}
+        onChangeText={text => setMetros(text)}
+        keyboardType="numeric"
+        color="white"
+        backgroundColor="blue"
+        width="40%"
+        placeholderTextColor={"white"}
+        marginBottom="10%"
+    
+      />
+       <Picker
+       style={styles.picker}
+            selectedValue={selectedValue}
+            onValueChange={handleValueChange}
+          >
+            <Picker.Item label="CENTIMETROS" value="centimetros" />
+            <Picker.Item label="PIE" value="pie" />
+            <Picker.Item label="KILOMETRO" value="kilometro" />
+            <Picker.Item label="MILIMETROS" value="milimetro" />
+            <Picker.Item label="PULGADA" value="pulgada" />
+          </Picker>
+      <TouchableOpacity
+         style={{ backgroundColor: 'blue', padding: 10, borderRadius: 5 }}
+     onPress={ConversionMetros}>
+    <Text style={{ color: 'white', fontSize: 16 }}>Calcular</Text>
+    </TouchableOpacity>
+      <Text style={{ fontSize: 16, marginTop: 20, color:"white" }}>
+         {result}
+      </Text>
+      
+     
+      {/* Por ejemplo, campos de entrada, botón de calcular, resultados, etc. */}
+      <TouchableOpacity onPress={() => setConversionesModalVisible(false)}>
+        <Text style={styles.closeButton}>Cerrar</Text>
+      </TouchableOpacity>
+    </View>
+    </Modal>
+    }
       {/* Título de la calculadora */}
    <Image
    source={require('./assets/logo_icel.png')}
@@ -1343,5 +1502,14 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginBottom: 20,
     color:"white"
+  },
+  picker: {
+    width: 200,
+    height: 50,
+    color: 'black', // Color del texto
+    backgroundColor: 'lightgray', // Color de fondo del picker
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'gray',
   },
 });
