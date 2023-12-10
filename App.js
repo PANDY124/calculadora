@@ -299,6 +299,10 @@ const handleCalculate = () => {
       }
       return Math.sqrt(number);
     });
+      // Reemplaza la multiplicación implícita con '*'
+  calculatedExpression = calculatedExpression.replace(/\)\(/g, ')*(');
+
+
     // funcio para calcular log
     calculatedExpression = calculatedExpression.replace(/log\(([^)]+)\)/g, function(match, value) {
       const number = parseFloat(value);
@@ -345,9 +349,10 @@ const handleCalculate = () => {
             onChangeText={text => setBase(text)}
             keyboardType="numeric"
             color="white"
-            backgroundColor="blue"
+            placeholderTextColor={"red"}
+            backgroundColor="rgb(6, 172, 255)"
             width="40%"
-            placeholderTextColor={"white"}
+          
             marginBottom="10%"
 
           />
@@ -357,9 +362,10 @@ const handleCalculate = () => {
             onChangeText={text => setAltura(text)}
             keyboardType="numeric"
             color="white"
-            backgroundColor="blue"
+            placeholderTextColor={"red"}
+            backgroundColor="rgb(6, 172, 255)"
             width="40%"
-            placeholderTextColor={"white"}
+            
             marginBottom="10%"
 
           />
@@ -371,8 +377,8 @@ const handleCalculate = () => {
           <Text style={{ fontSize: 16, marginTop: 20, color:"white" }}>
             Área del triángulo: {area}
           </Text>
-          {/* Agrega elementos para el cálculo del área */}
-          {/* Por ejemplo, campos de entrada, botón de calcular, resultados, etc. */}
+   
+
           <TouchableOpacity onPress={() => setIsAreaModalVisible(false)}>
             <Text style={styles.closeButton}>Cerrar</Text>
           </TouchableOpacity>
@@ -388,7 +394,7 @@ visible={isAreaModalVisible && selectedMenuItem === "Cuadrado"}
 onRequestClose={() => setIsAreaModalVisible(false)}
 >
 <View style={[styles.areaModalContainer, { zIndex: 2, position: 'absolute' }]}>
-  {/* Contenido para el cálculo del área del triangulo */}
+ 
   {/* datos a pedir */}
   <Text style={styles.areaModalTitle}>Calcular Área CUADRADO</Text>
   <TextInput
@@ -397,9 +403,10 @@ onRequestClose={() => setIsAreaModalVisible(false)}
     onChangeText={text => setLadoCuadrado(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+    
     marginBottom="10%"
 
   />
@@ -412,7 +419,7 @@ onRequestClose={() => setIsAreaModalVisible(false)}
   <Text style={{ fontSize: 16, marginTop: 20, color:"white" }}>
     Área del cuadrado: {areaCuadrado}
   </Text>
-  {/* Agrega elementos para el cálculo del área */}
+ 
   {/* Por ejemplo, campos de entrada, botón de calcular, resultados, etc. */}
   <TouchableOpacity onPress={() => setIsAreaModalVisible(false)}>
     <Text style={styles.closeButton}>Cerrar</Text>
@@ -430,7 +437,7 @@ visible={isAreaModalVisible && selectedMenuItem === "Circulo"}
 onRequestClose={() => setIsAreaModalVisible(false)}
 >
 <View style={[styles.areaModalContainer, { zIndex: 2, position: 'absolute' }]}>
-  {/* Contenido para el cálculo del área del triangulo */}
+
   {/* datos a pedir */}
   <Text style={styles.areaModalTitle}>Calcular Área CIRCULO</Text>
   <TextInput
@@ -439,9 +446,10 @@ onRequestClose={() => setIsAreaModalVisible(false)}
     onChangeText={text => setRadiocirculo(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+   
     marginBottom="10%"
 
   />
@@ -480,9 +488,10 @@ onRequestClose={() => setIsAreaModalVisible(false)}
     onChangeText={text => setBaserectangulo(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+    
     marginBottom="10%"
 
   />
@@ -492,9 +501,10 @@ onRequestClose={() => setIsAreaModalVisible(false)}
     onChangeText={text => setalturaRectangulo(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+    
     marginBottom="10%"
 
   />
@@ -507,7 +517,6 @@ onRequestClose={() => setIsAreaModalVisible(false)}
   <Text style={{ fontSize: 16, marginTop: 20, color:"white" }}>
     Área del Rectangulo: {areaRectangulo}
   </Text>
-  {/* Agrega elementos para el cálculo del área */}
   {/* Por ejemplo, campos de entrada, botón de calcular, resultados, etc. */}
   <TouchableOpacity onPress={() => setIsAreaModalVisible(false)}>
     <Text style={styles.closeButton}>Cerrar</Text>
@@ -533,9 +542,10 @@ onRequestClose={() => setIsAreaModalVisible(false)}
             onChangeText={text => setBase(text)}
             keyboardType="numeric"
             color="white"
-            backgroundColor="blue"
+            placeholderTextColor={"red"}
+            backgroundColor="rgb(6, 172, 255)"
             width="40%"
-            placeholderTextColor={"white"}
+           
             marginBottom="10%"
 
           />
@@ -545,9 +555,10 @@ onRequestClose={() => setIsAreaModalVisible(false)}
             onChangeText={text => setAltura(text)}
             keyboardType="numeric"
             color="white"
-            backgroundColor="blue"
+            placeholderTextColor={"red"}
+            backgroundColor="rgb(6, 172, 255)"
             width="40%"
-            placeholderTextColor={"white"}
+           
             marginBottom="10%"
 
           />
@@ -576,7 +587,7 @@ visible={isAreaModalVisible && selectedMenuItem === "ROMBO"}
 onRequestClose={() => setIsAreaModalVisible(false)}
 >
 <View style={[styles.areaModalContainer, { zIndex: 2, position: 'absolute' }]}>
-  {/* Contenido para el cálculo del área del triangulo */}
+
   {/* datos a pedir */}
   <Text style={styles.areaModalTitle}>Calcular Área del ROMBO</Text>
   <TextInput
@@ -585,9 +596,10 @@ onRequestClose={() => setIsAreaModalVisible(false)}
     onChangeText={text => setDiagonalMayor(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+   
     marginBottom="10%"
 
   />
@@ -597,9 +609,10 @@ onRequestClose={() => setIsAreaModalVisible(false)}
     onChangeText={text => setDiagonalMenor(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+    
     marginBottom="10%"
 
   />
@@ -730,7 +743,7 @@ visible={isPerimetroModalVisible && selectedMenuItemP=== "TRIANGULO"}
 onRequestClose={() => setIsPerimetroModalVisible(false)}
 >
 <View style={[styles.areaModalContainer, { zIndex: 2, position: 'absolute' }]}>
-  {/* Contenido para el cálculo del área del triangulo */}
+
   {/* datos a pedir */}
   <Text style={styles.areaModalTitle}>Calcular PERIMETRO del triangulo</Text>
   <TextInput
@@ -739,9 +752,9 @@ onRequestClose={() => setIsPerimetroModalVisible(false)}
     onChangeText={text => setlado1(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
     marginBottom="10%"
 
   />
@@ -751,9 +764,10 @@ onRequestClose={() => setIsPerimetroModalVisible(false)}
     onChangeText={text => setlado2(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+    
     marginBottom="10%"
 
   />
@@ -763,9 +777,10 @@ onRequestClose={() => setIsPerimetroModalVisible(false)}
   onChangeText={text => setlado3(text)}
   keyboardType="numeric"
   color="white"
-  backgroundColor="blue"
+  placeholderTextColor={"red"}
+  backgroundColor="rgb(6, 172, 255)"
   width="40%"
-  placeholderTextColor={"white"}
+  
   marginBottom="10%"
   />
   <TouchableOpacity
@@ -801,9 +816,10 @@ onRequestClose={() => setIsPerimetroModalVisible(false)}
     onChangeText={text => setladocua(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+    
     marginBottom="10%"
 
   />
@@ -832,7 +848,7 @@ visible={isPerimetroModalVisible && selectedMenuItemP=== "CIRCULO"}
 onRequestClose={() => setIsPerimetroModalVisible(false)}
 >
 <View style={[styles.areaModalContainer, { zIndex: 2, position: 'absolute' }]}>
-  {/* Contenido para el cálculo del área del triangulo */}
+
   {/* datos a pedir */}
   <Text style={styles.areaModalTitle}>Calcular PERIMETRO del CIRCULO</Text>
   <TextInput
@@ -841,9 +857,10 @@ onRequestClose={() => setIsPerimetroModalVisible(false)}
     onChangeText={text => setdiametro(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+    
     marginBottom="10%"
 
   />
@@ -873,7 +890,7 @@ visible={isPerimetroModalVisible && selectedMenuItemP === "RECTANGULO"}
 onRequestClose={() => setIsPerimetroModalVisible(false)}
 >
 <View style={[styles.areaModalContainer, { zIndex: 2, position: 'absolute' }]}>
-  {/* Contenido para el cálculo del área del triangulo */}
+
   {/* datos a pedir */}
   <Text style={styles.areaModalTitle}>Calcular PERIMETRO DEL RECTANGULO</Text>
   <TextInput
@@ -882,9 +899,10 @@ onRequestClose={() => setIsPerimetroModalVisible(false)}
     onChangeText={text => setBaseRec(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+    
     marginBottom="10%"
 
   />
@@ -894,9 +912,10 @@ onRequestClose={() => setIsPerimetroModalVisible(false)}
     onChangeText={text => setAlturaRec(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+    
     marginBottom="10%"
 
   />
@@ -908,7 +927,7 @@ onRequestClose={() => setIsPerimetroModalVisible(false)}
   <Text style={{ fontSize: 16, marginTop: 20, color:"white" }}>
     PERIOMETRO DEL RECTANGULO: {perimetroRectangulo}
   </Text>
-  {/* Agrega elementos para el cálculo del área */}
+
   {/* Por ejemplo, campos de entrada, botón de calcular, resultados, etc. */}
   <TouchableOpacity onPress={() => setIsPerimetroModalVisible(false)}>
     <Text style={styles.closeButton}>Cerrar</Text>
@@ -925,7 +944,7 @@ visible={isPerimetroModalVisible && selectedMenuItemP=== "ROMBO"}
 onRequestClose={() => setIsPerimetroModalVisible(false)}
 >
 <View style={[styles.areaModalContainer, { zIndex: 2, position: 'absolute' }]}>
-  {/* Contenido para el cálculo del área del triangulo */}
+
   {/* datos a pedir */}
   <Text style={styles.areaModalTitle}>Calcular PERIMETRO del ROMBO</Text>
   <TextInput
@@ -934,9 +953,10 @@ onRequestClose={() => setIsPerimetroModalVisible(false)}
     onChangeText={text => setangulo(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+   
     marginBottom="10%"
 
   />
@@ -1013,9 +1033,10 @@ onRequestClose={() => setConversionesModalVisible(false)}
     onChangeText={text => setFaren(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+    
     marginBottom="10%"
 
   />
@@ -1056,9 +1077,10 @@ onRequestClose={() => setConversionesModalVisible(false)}
     onChangeText={text => setDecimalInput(text)}
     keyboardType="numeric"
     color="white"
-    backgroundColor="blue"
+    placeholderTextColor={"red"}
+    backgroundColor="rgb(6, 172, 255)"
     width="40%"
-    placeholderTextColor={"white"}
+    
     marginBottom="10%"
 
   />
@@ -1080,7 +1102,7 @@ onRequestClose={() => setConversionesModalVisible(false)}
 </View>
 </Modal>
 }
-  {//modal BINARIO
+  {//modal metros
     <Modal
     animationType="slide"
     transparent={true}
@@ -1097,9 +1119,9 @@ onRequestClose={() => setConversionesModalVisible(false)}
         onChangeText={text => setMetros(text)}
         keyboardType="numeric"
         color="white"
-        backgroundColor="blue"
-        width="40%"
-        placeholderTextColor={"white"}
+        placeholderTextColor={"red"}
+        backgroundColor="rgb(6, 172, 255)"
+        width="50%"
         marginBottom="10%"
     
       />
@@ -1445,7 +1467,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "gray",
+    backgroundColor: "rgb(4,132,204)",
     marginHorizontal: 5,
     height: 40,
   },
@@ -1505,11 +1527,12 @@ const styles = StyleSheet.create({
   },
   picker: {
     width: 200,
-    height: 50,
-    color: 'black', // Color del texto
-    backgroundColor: 'lightgray', // Color de fondo del picker
+    height: 40,
+    color: 'red', // Color del texto
+    backgroundColor: 'rgb(6, 172, 255)', // Color de fondo del picker
     borderRadius: 8,
     borderWidth: 1,
     borderColor: 'gray',
+    marginBottom:30
   },
 });
